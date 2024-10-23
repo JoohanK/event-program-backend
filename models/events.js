@@ -36,7 +36,7 @@ const eventSchema = new mongoose.Schema({
     payment: {
       required: {
         type: Boolean,
-        required: true,
+        required: false,
       },
       paid: {
         type: Boolean,

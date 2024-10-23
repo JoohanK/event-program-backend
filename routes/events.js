@@ -28,14 +28,7 @@ router.post("/", async (req, res) => {
     images,
   } = req.body;
 
-  if (
-    !title ||
-    !nameOrOrganisation ||
-    !registration ||
-    !startDate ||
-    !startTime ||
-    !registration.payment.required
-  ) {
+  if (!title || !nameOrOrganisation || !location || !startDate || !startTime) {
     return res
       .status(400)
       .send({ error: "All required fields must be provided." });
