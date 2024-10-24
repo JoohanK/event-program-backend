@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
-const organisationSchema = new mongoose.Schema({
-  eventID: { type: mongoose.Schema.Types.ObjectId, ref: "Event" },
+const organisationSchema = new mongoose.Schema({  
   name: {
     type: String,
     required: true,
@@ -13,5 +12,4 @@ const organisationSchema = new mongoose.Schema({
 });
 
 const Organisation = mongoose.model("Organisation", organisationSchema);
-
 module.exports = Organisation;

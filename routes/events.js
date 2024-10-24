@@ -4,8 +4,11 @@ const Event = require("../models/events");
 
 router.get("/", async (req, res) => {
   try {
-    const events = await Event.find();
-    res.json(events);
+    const events = await Event.find()
+    .populate("location")
+    .populate("registration")
+    .populate("attendees");
+    res.json(events || []);
   } catch (error) {
     res.status(500).send({ error: "Failed to retrieve events." });
   }
@@ -23,6 +26,11 @@ router.post("/", async (req, res) => {
     extraInfoAfterRegistration,
     maxParticipants,
     images,
+    location,
+    createdBy,       
+    createdByModel,  
+    registration,    
+    attendees,
   } = req.body;
 
   if (!title || !startDate || !startTime) {
@@ -43,6 +51,11 @@ router.post("/", async (req, res) => {
       extraInfoAfterRegistration,
       maxParticipants,
       images,
+      location,
+      createdBy,       
+      createdByModel,
+      registration,    
+      attendees: attendees || [] 
     });
 
     await event.save();
@@ -64,6 +77,8 @@ router.put("/:id", async (req, res) => {
     extraInfoAfterRegistration,
     maxParticipants,
     images,
+    registration,    
+    attendees,
   } = req.body;
 
   try {
@@ -80,6 +95,8 @@ router.put("/:id", async (req, res) => {
         extraInfoAfterRegistration,
         maxParticipants,
         images,
+        registration,    
+        attendees: attendees || [] 
       },
       { new: true }
     );

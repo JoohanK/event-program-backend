@@ -4,7 +4,7 @@ const User = require("../models/users");
 
 router.get("/", async (req, res) => {
   try {
-    const users = await User.find().populate("eventID");
+    const users = await User.find();
     res.json(users);
   } catch (error) {
     res.status(500).send({ error: error.message });
@@ -12,17 +12,14 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { eventID, name, email } = req.body;
-  if (!eventID) {
-    return res.status(400).send({ error: "Event ID is required." });
-  }
+  const { name, email } = req.body;
+  
   if (!name) {
     return res.status(400).send({ error: "Name is required" });
   }
 
   try {
-    const user = new User({
-      eventID,
+    const user = new User({    
       name,
       email,
     });
@@ -35,12 +32,12 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const { eventID, name, email } = req.body;
+  const { name, email } = req.body;
 
   try {
     const user = await User.findByIdAndUpdate(
       req.params.id,
-      { eventID, name, email },
+      { name, email },
       { new: true }
     );
 

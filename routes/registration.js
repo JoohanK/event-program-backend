@@ -12,9 +12,6 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  if (!eventID) {
-    return res.status(400).send({ error: "Event ID is required." });
-  }
   const {
     eventID,
     requiresRegistration,
@@ -22,7 +19,10 @@ router.post("/", async (req, res) => {
     invitationRequired,
     payment,
   } = req.body;
-
+  
+  if (!eventID) {
+    return res.status(400).send({ error: "Event ID is required." });
+  }
   try {
     const registration = new Registration({
       eventID,

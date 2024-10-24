@@ -41,8 +41,34 @@ const eventSchema = new mongoose.Schema({
     type: [String],
     required: false,
   },
+  location: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Location",
+    required: true,
+  },
+  
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    refPath: "createdByModel",
+    required: true,
+  },
+  createdByModel: {
+    type: String,
+    required: true,
+    enum: ["User", "Organisation"],
+  },
+  registration: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Registration",
+    required: false,
+  },
+  attendees: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }
+  ]
 });
 
 const Event = mongoose.model("Event", eventSchema);
-
 module.exports = Event;
