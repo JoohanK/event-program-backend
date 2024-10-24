@@ -4,7 +4,7 @@ const Location = require("../models/locations");
 
 router.get("/", async (req, res) => {
   try {
-    const locations = await Location.find();
+    const locations = await Location.find().populate("eventID");
     res.json(locations);
   } catch (error) {
     res.status(500).send({ error: "Failed to retrieve locations." });
@@ -12,14 +12,18 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { physicalLocation, online } = req.body;
+  const { eventID, physicalLocation, online } = req.body;
 
-  if (!physicalLocation) {
-    return res.status(400).send({ error: "Physical location is required." });
+  if (!eventID) {
+    return res.status(400).send({ error: "Event ID is required." });
+  }
+  if (!physicalLocation && !online) {
+    return res.status(400).send({ error: "Location is required." });
   }
 
   try {
     const location = new Location({
+      eventID,
       physicalLocation,
       online,
     });
@@ -32,12 +36,12 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const { physicalLocation, online } = req.body;
+  const { eventID, physicalLocation, online } = req.body;
 
   try {
     const location = await Location.findByIdAndUpdate(
       req.params.id,
-      { physicalLocation, online },
+      { eventID, physicalLocation, online },
       { new: true }
     );
 

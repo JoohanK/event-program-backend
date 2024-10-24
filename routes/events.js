@@ -14,9 +14,6 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const {
     title,
-    nameOrOrganisation,
-    location,
-    registration,
     startDate,
     endDate,
     startTime,
@@ -28,7 +25,7 @@ router.post("/", async (req, res) => {
     images,
   } = req.body;
 
-  if (!title || !nameOrOrganisation || !location || !startDate || !startTime) {
+  if (!title || !startDate || !startTime) {
     return res
       .status(400)
       .send({ error: "All required fields must be provided." });
@@ -37,9 +34,6 @@ router.post("/", async (req, res) => {
   try {
     const event = new Event({
       title,
-      nameOrOrganisation,
-      location,
-      registration,
       startDate,
       endDate,
       startTime,
@@ -61,9 +55,6 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   const {
     title,
-    nameOrOrganisation,
-    location,
-    registration,
     startDate,
     endDate,
     startTime,
@@ -80,9 +71,6 @@ router.put("/:id", async (req, res) => {
       req.params.id,
       {
         title,
-        nameOrOrganisation,
-        location,
-        registration,
         startDate,
         endDate,
         startTime,

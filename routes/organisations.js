@@ -4,7 +4,7 @@ const Organisation = require("../models/organisations");
 
 router.get("/", async (req, res) => {
   try {
-    const organisations = await Organisation.find();
+    const organisations = await Organisation.find().populate("eventID");
     res.json(organisations);
   } catch (error) {
     res.status(500).send({ error: "Failed to retrieve organisations." });
@@ -12,7 +12,11 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { name, email } = req.body;
+  const { eventID, name, email } = req.body;
+
+  if (!eventID) {
+    return res.status(400).send({ error: "Event ID is required." });
+  }
 
   if (!name) {
     return res.status(400).send({ error: "Name is required." });
@@ -20,6 +24,7 @@ router.post("/", async (req, res) => {
 
   try {
     const organisation = new Organisation({
+      eventID,
       name,
       email,
     });
@@ -32,12 +37,12 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const { name, email } = req.body;
+  const { eventID, name, email } = req.body;
 
   try {
     const organisation = await Organisation.findByIdAndUpdate(
       req.params.id,
-      { name, email },
+      { eventID, name, email },
       { new: true }
     );
 
