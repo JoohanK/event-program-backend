@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 
 const locationSchema = new mongoose.Schema({
+  eventID: { type: mongoose.Schema.Types.ObjectId, ref: "Event" },
+
   physicalLocation: {
     type: String,
-    required: true,
+    required: false,
   },
   online: {
     type: String,

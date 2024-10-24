@@ -5,46 +5,6 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  nameOrOrganisation: {
-    type: String,
-    required: true,
-  },
-  location: {
-    physical: {
-      type: String,
-      required: true,
-    },
-    virtual: {
-      type: String,
-      required: false,
-    },
-  },
-
-  registration: {
-    requiresRegistration: {
-      type: Boolean,
-      required: false,
-    },
-    approvalRequired: {
-      type: Boolean,
-      required: false,
-    },
-    invitationRequired: {
-      type: Boolean,
-      required: false,
-    },
-    payment: {
-      required: {
-        type: Boolean,
-        required: false,
-      },
-      paid: {
-        type: Boolean,
-        required: false,
-      },
-    },
-  },
-
   startDate: {
     type: Date,
     required: true,
